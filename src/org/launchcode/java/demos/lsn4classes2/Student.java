@@ -1,5 +1,7 @@
 package org.launchcode.java.demos.lsn4classes2;
 
+import java.util.Objects;
+
 public class Student {
 
     private static int nextStudentId = 1;
@@ -29,21 +31,56 @@ public class Student {
     }
 
 
-     //TODO: Uncomment and complete the getGradeLevel method here:
-//    public String getGradeLevel() {
-//        // Determine the grade level of the student based on numberOfCredits
-//    }
 
-    // TODO: Complete the addGrade method.
-    public void addGrade(int courseCredits, double grade) {
-        // Update the appropriate fields: numberOfCredits, gpa
+    public String getGradeLevel() {
+         String gradeLevel;
+        if (this.numberOfCredits >= 0 && this.numberOfCredits <=29){
+            gradeLevel = "Freshman";
+            return gradeLevel;
+        } else if (this.numberOfCredits >= 30 && this.numberOfCredits <= 59) {
+            gradeLevel = "Sophomore";
+            return gradeLevel;
+        } else if (this.numberOfCredits >= 60 && this.numberOfCredits <= 89) {
+            gradeLevel = "Junior";
+            return gradeLevel;
+        } else if (this.numberOfCredits >= 90) {
+            gradeLevel = "Senior";
+            return gradeLevel;
+        } else {
+            return "Invalid grade level.";
+        }
     }
 
-    // TODO: Add your custom 'toString' method here. Make sure it returns a well-formatted String rather
-    //  than just the class fields.
+    public void addGrade(int courseCredits, double grade) {
+        double currentScore = this.gpa * this.numberOfCredits;
+        double updatedScore = (grade * courseCredits) + currentScore;
+        this.numberOfCredits = this.numberOfCredits + courseCredits;
+        this.gpa = updatedScore / this.numberOfCredits;
+    }
 
-    // TODO: Add your custom 'equals' method here. Consider which fields should match in order to call two
-    //  Student objects equal.
+    @Override
+    public String toString() {
+        return "Student{" +
+                "name='" + name + '\'' +
+                ", studentId=" + studentId +
+                ", numberOfCredits=" + numberOfCredits +
+                ", gpa=" + gpa +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return studentId == student.studentId;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(studentId);
+    }
+//  Student objects equal.
 
     public String getName() {
         return name;
